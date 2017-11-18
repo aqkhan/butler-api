@@ -14,6 +14,8 @@ router.use(methodOverride(function(req, res){
     }
 }));
 
+// Basic CRUD
+
 router
     .get('/', function (req, res, next) {
         mongoose.model('Categories').find({}, function (err, categories) {
@@ -110,6 +112,43 @@ router
                             success: true,
                             message: 'Category created successfully.',
                             id: category.id
+                        });
+                    }
+                });
+            }
+        });
+    })
+    .put('/:id', function (req, res, next) {
+        mongoose.model('Categories').findByIdAndUpdate(req.params.id, req.body, function (err, category) {
+            if (err) {
+                res.status(500);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Fatal error.'
+                        });
+                    }
+                });
+            }
+            else if (!category) {
+                res.status(404);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Category not found: ' + req.params.id
+                        });
+                    }
+                });
+            }
+            else {
+                res.status(200);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: true,
+                            message: 'Category updated successfully: ' + category.id
                         });
                     }
                 });

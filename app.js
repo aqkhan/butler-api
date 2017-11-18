@@ -15,6 +15,9 @@ var categoriesRoute = require('./routes/categories');
 var vendorsRoute = require('./routes/vendors');
 var productsRoute = require('./routes/products');
 
+var categoryMiddleware = require('./routes/middlewares/categoryMiddleware');
+var vendorMiddleware = require('./routes/middlewares/vendorMiddleware');
+
 var app = express();
 
 // view engine setup
@@ -29,6 +32,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', categoryMiddleware);
+app.use('/', vendorMiddleware);
 
 app.use('/', index);
 app.use('/categories', categoriesRoute);

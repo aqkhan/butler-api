@@ -90,7 +90,7 @@ router
         });
     })
     .post('/', function (req, res, next) {
-        mongoose.model('Categories').findById(req.body.category, function (err, category) {
+        mongoose.model('Vendors').create(req.body, function (err, vendor) {
             if (err) {
                 res.status(500);
                 res.format({
@@ -102,40 +102,51 @@ router
                     }
                 });
             }
-            else if (!category) {
+            else {
+                res.status(201);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: true,
+                            message: 'Vendor created successfully.',
+                            id: vendor.id
+                        });
+                    }
+                });
+            }
+        });
+    })
+    .put('/:id', function (req, res, next) {
+        mongoose.model('Vendors').findByIdAndUpdate(req.params.id, req.body, function (err, vendor) {
+            if (err) {
+                res.status(500);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Fatal error.'
+                        });
+                    }
+                });
+            }
+            else if (!vendor) {
                 res.status(404);
                 res.format({
                     json: function () {
                         res.json({
                             success: false,
-                            message: 'Category not found :' + req.body.category
+                            message: 'Vendor not found: ' + req.params.id
                         });
                     }
                 });
             }
             else {
-                mongoose.model('Vendors').create(req.body, function (err, vendor) {
-                    if (err) {
-                        res.status(500);
-                        res.format({
-                            json: function () {
-                                res.json({
-                                    success: false,
-                                    message: 'Fatal error.'
-                                });
-                            }
-                        });
-                    }
-                    else {
-                        res.status(201);
-                        res.format({
-                            json: function () {
-                                res.json({
-                                    success: true,
-                                    message: 'Vendor created successfully.',
-                                    id: vendor.id
-                                });
-                            }
+                res.status(200);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: true,
+                            message: 'Vendor updated successfully: ' + vendor.id
                         });
                     }
                 });
@@ -180,8 +191,8 @@ router
         });
     });
 
-router.get('/category/:category', function (req, res, next) {
-    mongoose.model('Vendors').find({'category': req.params.category}, function (err, vendors) {
+router.get('/vendor/:vendor', function (req, res, next) {
+    mongoose.model('Vendors').find({'vendor': req.params.vendor}, function (err, vendors) {
         if (err) {
             res.status(500);
             res.format({

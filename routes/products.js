@@ -90,7 +90,7 @@ router
         });
     })
     .post('/', function (req, res, next) {
-        mongoose.model('Vendors').findById(req.body.vendor, function (err, vendor) {
+        mongoose.model('Products').create(req.body, function (err, product) {
             if (err) {
                 res.status(500);
                 res.format({
@@ -102,40 +102,51 @@ router
                     }
                 });
             }
-            else if (!vendor) {
+            else {
+                res.status(201);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: true,
+                            message: 'Product created successfully.',
+                            id: product.id
+                        });
+                    }
+                });
+            }
+        });
+    })
+    .put('/:id', function (req, res, next) {
+        mongoose.model('Products').findByIdAndUpdate(req.params.id, req.body, function (err, product) {
+            if (err) {
+                res.status(500);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Fatal error.'
+                        });
+                    }
+                });
+            }
+            else if (!product) {
                 res.status(404);
                 res.format({
                     json: function () {
                         res.json({
                             success: false,
-                            message: 'Vendor not found: ' + req.params.id
+                            message: 'Product not found: ' + req.params.id
                         });
                     }
                 });
             }
             else {
-                mongoose.model('Products').create(req.body, function (err, product) {
-                    if (err) {
-                        res.status(500);
-                        res.format({
-                            json: function () {
-                                res.json({
-                                    success: false,
-                                    message: 'Fatal error.'
-                                });
-                            }
-                        });
-                    }
-                    else {
-                        res.status(201);
-                        res.format({
-                            json: function () {
-                                res.json({
-                                    success: true,
-                                    message: 'Product created successfully.',
-                                    id: product.id
-                                });
-                            }
+                res.status(200);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: true,
+                            message: 'Product updated successfully: ' + product.id
                         });
                     }
                 });
@@ -180,6 +191,8 @@ router
         });
     });
 
+// Advanced Ops
+
 router.get('/vendor/:vendor', function (req, res, next) {
     mongoose.model('Products').find({'vendor': req.params.vendor}, function (err, products) {
         if (err) {
@@ -218,8 +231,8 @@ router.get('/vendor/:vendor', function (req, res, next) {
     });
 });
 
-router.get('/category/:category', function (req, res, next) {
-    mongoose.model('Products').find({'category': req.params.category}, function (err, products) {
+router.get('/product/:product', function (req, res, next) {
+    mongoose.model('Products').find({'product': req.params.product}, function (err, products) {
         if (err) {
             res.status(500);
             res.format({
