@@ -32,6 +32,36 @@ router.use(function (req, res, next) {
             }
         });
     }
+    else if (req.originalUrl.indexOf('vendor') >= 0 && req.method === 'GET'){
+        var id = req.originalUrl.split('vendor/')[1];
+        mongoose.model('Vendors').findById(id, function (err, category) {
+            if (err) {
+                res.status(500);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Fatal error.'
+                        });
+                    }
+                });
+            }
+            else if (!category) {
+                res.status(404);
+                res.format({
+                    json: function () {
+                        res.json({
+                            success: false,
+                            message: 'Vendor not found: ' + id
+                        });
+                    }
+                });
+            }
+            else {
+                next();
+            }
+        });
+    }
     else {
         next();
     }

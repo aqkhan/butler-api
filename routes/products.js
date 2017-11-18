@@ -14,6 +14,8 @@ router.use(methodOverride(function(req, res){
     }
 }));
 
+// Basic CRUD
+
 router
     .get('/', function (req, res, next) {
         mongoose.model('Products').find({}, function (err, products) {

@@ -14,6 +14,8 @@ router.use(methodOverride(function(req, res){
     }
 }));
 
+// Basic CRUD
+
 router
     .get('/', function (req, res, next) {
         mongoose.model('Vendors').find({}, function (err, vendors) {
@@ -190,6 +192,8 @@ router
             }
         });
     });
+
+// Advanced Ops
 
 router.get('/category/:category', function (req, res, next) {
     mongoose.model('Vendors').find({'category': req.params.category}, function (err, vendors) {
