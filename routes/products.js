@@ -45,7 +45,7 @@ router
                     json: function () {
                         res.json({
                             success: true,
-                            data: products
+                            payLoad: products
                         });
                     }
                 });
@@ -82,7 +82,7 @@ router
                     json: function () {
                         res.json({
                             success: true,
-                            data: product
+                            payLoad: product
                         });
                     }
                 });

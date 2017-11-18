@@ -45,7 +45,7 @@ router
                     json: function () {
                         res.json({
                             success: true,
-                            data: categories
+                            payLoad: categories
                         });
                     }
                 });
@@ -82,7 +82,7 @@ router
                     json: function () {
                         res.json({
                             success: true,
-                            data: category
+                            payLoad: category
                         });
                     }
                 });
