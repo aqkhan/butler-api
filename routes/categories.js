@@ -154,4 +154,42 @@ router
         });
     });
 
+router.get('/type/:type', function (req, res, next) {
+    mongoose.model('Categories').find({'type' : req.params.type}, function (err, categories) {
+        if (err) {
+            res.status(500);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'Fatal error.'
+                    });
+                }
+            });
+        }
+        else if (!categories.length) {
+            res.status(404);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'No categories found.'
+                    });
+                }
+            });
+        }
+        else {
+            res.status(200);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: true,
+                        payLoad: categories
+                    });
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;

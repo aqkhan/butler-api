@@ -180,4 +180,42 @@ router
         });
     });
 
+router.get('/category/:category', function (req, res, next) {
+    mongoose.model('Vendors').find({'category': req.params.category}, function (err, vendors) {
+        if (err) {
+            res.status(500);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'Fatal error.'
+                    });
+                }
+            });
+        }
+        else if (!vendors.length) {
+            res.status(404);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'No vendors found.'
+                    });
+                }
+            });
+        }
+        else {
+            res.status(200);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: true,
+                        payLoad: vendors
+                    });
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;

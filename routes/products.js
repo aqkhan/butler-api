@@ -180,4 +180,80 @@ router
         });
     });
 
+router.get('/vendor/:vendor', function (req, res, next) {
+    mongoose.model('Products').find({'vendor': req.params.vendor}, function (err, products) {
+        if (err) {
+            res.status(500);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'Fatal error.'
+                    });
+                }
+            });
+        }
+        else if (!products.length) {
+            res.status(404);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'No products found.'
+                    });
+                }
+            });
+        }
+        else {
+            res.status(200);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: true,
+                        payLoad: products
+                    });
+                }
+            });
+        }
+    });
+});
+
+router.get('/category/:category', function (req, res, next) {
+    mongoose.model('Products').find({'category': req.params.category}, function (err, products) {
+        if (err) {
+            res.status(500);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'Fatal error.'
+                    });
+                }
+            });
+        }
+        else if (!products.length) {
+            res.status(404);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: false,
+                        message: 'No products found.'
+                    });
+                }
+            });
+        }
+        else {
+            res.status(200);
+            res.format({
+                json: function () {
+                    res.json({
+                        success: true,
+                        payLoad: products
+                    });
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;
