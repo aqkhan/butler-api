@@ -32,36 +32,6 @@ router.use(function (req, res, next) {
             }
         });
     }
-    else if (req.originalUrl.indexOf('category') >= 0 && req.method === 'GET'){
-        var id = req.originalUrl.split('category/')[1];
-        mongoose.model('Categories').findById(id, function (err, category) {
-            if (err) {
-                res.status(500);
-                res.format({
-                    json: function () {
-                        res.json({
-                            success: false,
-                            message: 'Fatal error.'
-                        });
-                    }
-                });
-            }
-            else if (!category) {
-                res.status(404);
-                res.format({
-                    json: function () {
-                        res.json({
-                            success: false,
-                            message: 'Category not found: ' + id
-                        });
-                    }
-                });
-            }
-            else {
-                next();
-            }
-        });
-    }
     else {
         next();
     }
