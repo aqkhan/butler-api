@@ -7,8 +7,18 @@ var mongoose = require('mongoose'),
 autoIncrement.initialize(connection);
 
 var categorySchema = new Schema({
-    name: String,
-    hits: Number,
+    name: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    hits: {
+        type: Number,
+        default: 0
+    },
     thumbnail: String
 });
 

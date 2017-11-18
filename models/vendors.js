@@ -7,10 +7,14 @@ var mongoose = require('mongoose'),
 autoIncrement.initialize(connection);
 
 var vendorSchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     category: {
         type: Number,
-        ref: 'Categories'
+        ref: 'Categories',
+        required: true
     },
     address: String,
     contactPerson: {

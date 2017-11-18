@@ -7,18 +7,29 @@ var mongoose = require('mongoose'),
 autoIncrement.initialize(connection);
 
 var productsSchema = new Schema({
-    sku: String,
-    title: String,
+    sku: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
     description: String,
     vendor: {
         type: Number,
-        ref: 'Vendors'
+        ref: 'Vendors',
+        required: true
     },
     category: {
         type: Number,
-        ref: 'Categories'
+        ref: 'Categories',
+        required: true
     },
-    basePrice: Number,
+    basePrice: {
+        type: Number,
+        required: true
+    },
     attributeSet: [],
     inStock: {
         type: Boolean,
@@ -34,8 +45,14 @@ var productsSchema = new Schema({
     },
     dimensions: [],
     deliveryType: String,
-    deliveryCharges: Number,
-    thumbnail: String,
+    deliveryCharges: {
+        type: Number,
+        default: 0
+    },
+    thumbnail: {
+        type: String,
+        required: true
+    },
     imgSet: [],
     createdBy: {
         type: Number,
