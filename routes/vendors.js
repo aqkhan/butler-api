@@ -191,8 +191,8 @@ router
         });
     });
 
-router.get('/vendor/:vendor', function (req, res, next) {
-    mongoose.model('Vendors').find({'vendor': req.params.vendor}, function (err, vendors) {
+router.get('/category/:category', function (req, res, next) {
+    mongoose.model('Vendors').find({'category': req.params.category}, function (err, vendors) {
         if (err) {
             res.status(500);
             res.format({

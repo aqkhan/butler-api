@@ -231,8 +231,8 @@ router.get('/vendor/:vendor', function (req, res, next) {
     });
 });
 
-router.get('/product/:product', function (req, res, next) {
-    mongoose.model('Products').find({'product': req.params.product}, function (err, products) {
+router.get('/category/:category', function (req, res, next) {
+    mongoose.model('Products').find({'category': req.params.category}, function (err, products) {
         if (err) {
             res.status(500);
             res.format({
