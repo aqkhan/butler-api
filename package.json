@@ -12,7 +12,7 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^9.0.0",
     "method-override": "^2.3.10",
     "mongoose": "^4.13.4",
     "mongoose-auto-increment": "^5.0.1",
